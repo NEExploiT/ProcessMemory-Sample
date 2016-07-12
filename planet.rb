@@ -1,7 +1,5 @@
-=begin
-なんとなく造ったプラネットドラゴン体験版用
-交易品を列挙するだけのスクリプト
-=end
+# なんとなく造ったプラネットドラゴン体験版用
+# 交易品を列挙するだけのスクリプト
 
 # お約束
 require 'ProcessMemory.rb'
@@ -14,17 +12,17 @@ $mem = memoryutil_startup
 # utf16leを適当に読み込む関数
 def wstr(pointer, bufmax = 0x1000)
   r = $mem.ptr_fmt(pointer, bufmax, 'v*')
-  s = r.take_while{|it| it != 0}.pack('v*')
+  s = r.take_while { |it| it != 0 }.pack('v*')
   s.force_encoding Encoding::UTF_16LE
 end
 
-base = ptr(ptr(ptr(ptr(ptr(ptr(MName('planet.exe')+0x130a)+0x238)+0xe8)+0x64)+0x18c)+0x3C)-0x10
+base = ptr(ptr(ptr(ptr(ptr(ptr(MName('planet.exe') + 0x130a) + 0x238) + 0xe8) + 0x64) + 0x18c) + 0x3C) - 0x10
 
 adjust_offset = -0x10 # 体験版は 0
 len  = ptr(base + 0x77B64 + adjust_offset)
 ary  = ptr(base + 0x77B60 + adjust_offset)
 
-(0...len).each{|x|
+(0...len).each do |x|
   it = ary + x * 24
   num      = ptr(it)               # 4
   name     = wstr(ptr(it + 4))     # 8
@@ -39,4 +37,4 @@ ary  = ptr(base + 0x77B60 + adjust_offset)
   category8 = category.encode Encoding::UTF_8
   name8     = name.encode Encoding::UTF_8
   puts "#{num} = [#{category8}]#{name8}(#{icon})"
-}
+end

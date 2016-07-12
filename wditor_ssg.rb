@@ -12,9 +12,11 @@ end
 def udb(type = nil, id = nil, col = nil)
   db(USER_DATABASE_BASE, type, id, col)
 end
+
 def vdb(type = nil, id = nil, col = nil)
   db(VAR_DATABASE_BASE, type, id, col)
 end
+
 def sdb(type = nil, id = nil, col = nil)
   db(SYS_DATABASE_BASE, type, id, col)
 end
@@ -23,60 +25,58 @@ mem = WditString.proccess = memoryutil_startup
 
 class String
   def ssg_escape
-    gsub(/[\\\/:,=]/){|s| "\\#{s}"}
+    gsub(/[\\\/:,=]/) { |s| "\\#{s}" }
   end
 end
-=begin
-ERB.new((<<EOS).encode('cp932'), nil, '%-').run
-SSG for SpoilerAL ver 6.1
---------------------------------------------------------------------------------
-[script]
-[title]<%=
-WditString.new(ptr(GAME_INFO)+4).to_s + 
-WditString.new(ptr(GAME_INFO)+0xE4).to_s
-%>
-[process]Game.exe
-[distinction]五十音順=TODO:
-[creator]TODO: あなたの名前
-[maker]TODO: メーカー名
-[note]wordwrap
-<%=  Time.now.strftime "%F" %>: 自動生成
-TODO: 説明などを書く
-[/note]
-// 可変データベース
-[subject]可変データベース : dir 
-% vdb.keys.each.with_index do |tname, type|
-%  next if tname.to_s.empty? # 名前のないデータベースは飛ばす
-  [subject]<%= tname.ssg_escape %>:dir 
-%  vdb(type).keys.each.with_index do |idname, id|
-%   case type
-%   when 7,8,9
-%     idname = udb(type - 7 + 2).keys[id]
-%   end
-%   next if idname.to_s.empty?
-    [subject]<%= idname.ssg_escape %>:dir
-%    vdb(type, id).keys.each.with_index do |colname, col|
-%     next if colname.to_s.empty?
-%     data = vdb(type, id, col)
-%     if data.data_type == :Number
-      [subject]<%= colname.ssg_escape + ':calc, _ ' + data.addr %>,-2147483648, 2147483647
-%     end
-%   end
-    [back]
-%  end
-  [back]
-% end
-[root]
-[/script]
-EOS
-=end
+# ERB.new((<<EOS).encode('cp932'), nil, '%-').run
+# SSG for SpoilerAL ver 6.1
+# --------------------------------------------------------------------------------
+# [script]
+# [title]<%=
+# WditString.new(ptr(GAME_INFO)+4).to_s +
+# WditString.new(ptr(GAME_INFO)+0xE4).to_s
+# %>
+# [process]Game.exe
+# [distinction]五十音順=TODO:
+# [creator]TODO: あなたの名前
+# [maker]TODO: メーカー名
+# [note]wordwrap
+# <%=  Time.now.strftime "%F" %>: 自動生成
+# TODO: 説明などを書く
+# [/note]
+# // 可変データベース
+# [subject]可変データベース : dir
+# % vdb.keys.each.with_index do |tname, type|
+# %  next if tname.to_s.empty? # 名前のないデータベースは飛ばす
+#   [subject]<%= tname.ssg_escape %>:dir
+# %  vdb(type).keys.each.with_index do |idname, id|
+# %   case type
+# %   when 7,8,9
+# %     idname = udb(type - 7 + 2).keys[id]
+# %   end
+# %   next if idname.to_s.empty?
+#     [subject]<%= idname.ssg_escape %>:dir
+# %    vdb(type, id).keys.each.with_index do |colname, col|
+# %     next if colname.to_s.empty?
+# %     data = vdb(type, id, col)
+# %     if data.data_type == :Number
+#       [subject]<%= colname.ssg_escape + ':calc, _ ' + data.addr %>,-2147483648, 2147483647
+# %     end
+# %   end
+#     [back]
+# %  end
+#   [back]
+# % end
+# [root]
+# [/script]
+# EOS
 
-ERB.new((<<EOS).encode('cp932'), nil, '%-').run
+ERB.new(<<EOS.encode('cp932'), nil, '%-').run
 SSG for SpoilerAL ver 6.1
 --------------------------------------------------------------------------------
 [script]
 [title]<%=
-WditString.new(ptr(GAME_INFO)+4).to_s + 
+WditString.new(ptr(GAME_INFO)+4).to_s +
 WditString.new(ptr(GAME_INFO)+0xE4).to_s
 %>
 [process]Game.exe

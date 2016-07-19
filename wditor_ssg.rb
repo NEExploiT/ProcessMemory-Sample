@@ -25,7 +25,7 @@ WditString.proccess = memoryutil_startup
 
 class String
   def ssg_escape
-    gsub(/[\\\/:,=]/){|s| "\\#{s}" }
+    gsub(%r{[\/:,=]}){|s| "\\#{s}" }
   end
 end
 

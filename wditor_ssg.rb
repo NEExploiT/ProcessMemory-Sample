@@ -21,7 +21,7 @@ def sdb(type = nil, id = nil, col = nil)
   db(SYS_DATABASE_BASE, type, id, col)
 end
 
-mem = WditString.proccess = memoryutil_startup
+WditString.proccess = memoryutil_startup
 
 class String
   def ssg_escape

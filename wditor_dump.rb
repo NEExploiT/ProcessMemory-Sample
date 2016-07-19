@@ -4,9 +4,9 @@ require './lib/ProcessMemory.rb'
 require './lib/wditor_lib.rb'
 require 'csv'
 
-puts "ウディタv2.10製ゲームの通常/予備変数/文字列変数/可変データベースを全てダンプする"
+puts 'ウディタv2.10製ゲームの通常/予備変数/文字列変数/可変データベースを全てダンプする'
 
-mem = WditString.proccess = memoryutil_startup
+WditString.proccess = memoryutil_startup
 
 def db(addr, type = nil, id = nil, col = nil)
   return DataBase_Info.new addr unless type

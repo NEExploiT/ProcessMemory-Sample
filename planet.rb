@@ -24,12 +24,12 @@ ary  = ptr(base + 0x77B60 + adjust_offset)
 
 (0...len).each do |x|
   it = ary + x * 24
-  num      = ptr(it)               # 4
-  name     = wstr(ptr(it + 4))     # 8
-  category = wstr(ptr(it + 8))     # 12
-  santi    = wstr(ptr(it + 0xC))   # 16
-  icon     = ptr(it + 0x10)        # 20
-  descript = wstr(ptr(it + 0x14))  # 24
+  num       = ptr(it)               # 4
+  name      = wstr(ptr(it + 4))     # 8
+  category  = wstr(ptr(it + 8))     # 12
+  _santi    = wstr(ptr(it + 0xC))   # 16
+  icon      = ptr(it + 0x10)        # 20
+  _descript = wstr(ptr(it + 0x14))  # 24
 
   # puts name
   # puts category

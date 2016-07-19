@@ -12,7 +12,7 @@ $mem = memoryutil_startup
 # utf16leを適当に読み込む関数
 def wstr(pointer, bufmax = 0x1000)
   r = $mem.ptr_fmt(pointer, bufmax, 'v*')
-  s = r.take_while { |it| it != 0 }.pack('v*')
+  s = r.take_while{|it| it != 0 }.pack('v*')
   s.force_encoding Encoding::UTF_16LE
 end
 

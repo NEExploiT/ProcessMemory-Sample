@@ -25,7 +25,7 @@ mem = WditString.proccess = memoryutil_startup
 
 class String
   def ssg_escape
-    gsub(/[\\\/:,=]/) { |s| "\\#{s}" }
+    gsub(/[\\\/:,=]/){|s| "\\#{s}" }
   end
 end
 # ERB.new((<<EOS).encode('cp932'), nil, '%-').run

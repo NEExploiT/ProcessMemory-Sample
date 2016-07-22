@@ -1,4 +1,4 @@
-require_relative 'lib/pe'
+require 'ProcessMemory/pe'
 
 pe = PE::PEModule.new ProcessMemory::ProcessMemoryUtil.memoryutil_startup
 base = pe.base_addr

@@ -1,6 +1,6 @@
 require_relative 'lib/pe'
 
-pe = PELib.new ProcessMemoryEx.new ProcessMemory::ProcessMemoryUtil.memoryutil_startup
+pe = PE::PEModule.new ProcessMemory::ProcessMemoryUtil.memoryutil_startup
 base = pe.base_addr
 
 def build_expr(_base, name, ix, offset)
@@ -26,18 +26,23 @@ def build_expr_usamimi(_base, _name, ix, offset)
     format('g + i + 0x%0X', offset)
 end
 
+puts pe.base_name
+puts format('%08X - %08X', pe.base_addr, pe.base_addr + pe.size)
+
 print 'input:'
-while (addr = gets.hex) != 0
-  ix, sec = pe.offset_of addr
+while (addr = STDIN.gets.hex) != 0
+  puts "\noutput:"
+  sec = pe.address_of addr
+  ix = sec.index
   if ix
-    va = sec.VirtualAddress
+    va = sec.virtual_address
     offset = addr - base - va
     puts format('0x%08X = 0x%08X + 0x%08X + 0x%08X', addr, base, va, offset)
     puts build_expr(base, pe.base_name, ix, offset)
-    puts build_expr_usamimi(base, pe.base_name, ix, offset)
     puts build_expr_tenuki(base, pe.base_name, ix, offset, pe)
+    puts build_expr_usamimi(base, pe.base_name, ix, offset)
   else
     puts format('0x%08X is not found', addr)
   end
-  print 'input:'
+  print "\ninput:"
 end

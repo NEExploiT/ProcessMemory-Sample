@@ -68,6 +68,7 @@ Style/MutableConstant:
     - 'spec/*_spec.rb'
 AllCops:
    Exclude:
+    - 'vendor/**/*'
     - 'spec/spec_helper.rb'
     - '*.gemspec'
     - 'Rakefile'

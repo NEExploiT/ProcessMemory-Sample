@@ -17,10 +17,10 @@ module PE
 
       # ヘッダ解析
       @nt_header = @base_addr + ptr_i32(@base_addr + 0x3C)
-      @file_header = ptr_struct @nt_header + 4, PEFormat::FileHeader
-      optiheader = @nt_header + 4 + 20
+      @file_header = ptr_struct @nt_header + 4, PEFormat::FileHeader, PEFormat::SizeOfFileHeader
+      optiheader = @nt_header + 4 + PEFormat::SizeOfFileHeader
       @optional_header = analyze_optiheader optiheader
-      @data_directories = analyze_datadirs optiheader + 0x60
+      @data_directories = analyze_datadirs optiheader + PEFormat::SizeOfOptionalHeader
 
       @size = @optional_header.SizeOfImage
 
@@ -55,8 +55,8 @@ module PE
 
     def analyze_optiheader(opti)
       case @mem.ptr_fmt(opti, 2, 'v')
-      when 0x010B then ptr_struct(opti, PEFormat::OptionalHeaderx86)
-      when 0x020B then ptr_struct(opti, PEFormat::OptionalHeaderx64)
+      when 0x010B then ptr_struct(opti, PEFormat::OptionalHeaderx86, PEFormat::SizeOfOptionalHeader)
+      when 0x020B then ptr_struct(opti, PEFormat::OptionalHeaderx64, PEFormat::SizeOfOptionalHeader)
       else
         raise "err: unknown optinalmagic (0x#{magic.to_s 16})"
       end

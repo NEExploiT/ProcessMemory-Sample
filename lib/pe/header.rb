@@ -78,6 +78,10 @@ module PE
       DWORD64\ ImageBase
     ] + OptionalSuffix
 
+    SizeOfImageSectionHeader = ImageSectionHeader.size
+    SizeOfOptionalHeader = OptionalHeaderx86.size
+    SizeOfFileHeader = FileHeader.size
+
     # IDEA: 再配置情報
     # IMAGE_BASE_RELOCATION = struct %w[
     #  DWORD32\ VirtualAddress

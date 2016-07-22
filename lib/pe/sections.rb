@@ -22,7 +22,7 @@ module PE
   # 各モジュールごとのセクションテーブル情報
   class ModuleSections
     ImageSectionHeader = PE::PEFormat::ImageSectionHeader
-    ImageSectionHeaderSize = ImageSectionHeader.size
+    ImageSectionHeaderSize = PEFormat::SizeOfImageSectionHeader
     def initialize(mem, base, offset, count)
       @mem = mem
       @base = base

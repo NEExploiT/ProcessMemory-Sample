@@ -87,7 +87,7 @@ class RGSS
   # 詳細はそのうち調べる
   #                      symbol_table, global_vars
   RGSS103J = RGSSSet.new 0x1836BC, nil
-  RGSS104J = RGSSSet.new nil, 0x184498
+  RGSS104J = RGSSSet.new 0x1836BC, 0x184498
   RGSS202J = RGSSSet.new 0x18A23C, 0x18B018
   RGSS301  = RGSSSet.new 0x25a2ac, 0x2ac044, true
 end

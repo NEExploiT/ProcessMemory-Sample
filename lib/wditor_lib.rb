@@ -19,7 +19,7 @@ class WditString
   end
 
   def read
-    return '' if @buf[1] == 0
+    return '' if @buf[1].zero?
     return @@wditor.ptr_buf(@buf[0].unpack('V')[0], @buf[1]) if @buf[2] > 15
     @buf[0][0, @buf[1]]
   end
@@ -82,11 +82,7 @@ class DataBase_Info
   end
 
   def __to_a
-    (0..size).map do |x|
-      @base + x * SIZEOF
-    end.map do |addr|
-      WditString.new(addr).to_s
-    end
+    (0..size).map{|x| @base + x * SIZEOF }.map{|addr| WditString.new(addr).to_s }
   end
 end
 
@@ -106,14 +102,13 @@ class WditStringArray
   end
 
   def __to_a
-    addr = @base
     (0..size).map do |ix|
       WditString.new(@base + 0x1C * ix).to_s
     end
   end
 
   def to_a
-    @ary ||= __to_a
+    @to_a ||= __to_a
   end
 end
 

@@ -1,4 +1,3 @@
-# coding: utf-8
 # ウディタv2.10製ゲームの通常/予備変数/文字列変数/可変データベースを全てダンプする
 require './lib/ProcessMemory.rb'
 require './lib/wditor_lib.rb'

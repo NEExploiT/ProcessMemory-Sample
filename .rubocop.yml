@@ -1,9 +1,12 @@
 #AllCops:
 #  TargetRubyVersion: 2.1
 
-Style/FileName:
+Naming/FileName:
   Enabled: false
-
+Layout/EndOfLine:
+  EnforcedStyle: lf
+Naming/UncommunicativeMethodParamName:
+  MinNameLength: 2
 # Limit lines to 80 characters.
 #LineLength:
 #  Enabled: false
@@ -49,10 +52,10 @@ Style/BlockDelimiters:
 
 # proc{|x|} => proc {|x|}
 # but I dont like space.
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   EnforcedStyle: no_space
   #Enabled: false
-Style/SpaceInsideBlockBraces:
+Layout/SpaceInsideBlockBraces:
   SpaceBeforeBlockParameters: false
 
 # dont use ===
@@ -67,9 +70,17 @@ Style/MutableConstant:
   Exclude:
     - 'spec/*_spec.rb'
 AllCops:
-   Exclude:
+ Exclude:
     - 'vendor/**/*'
     - 'spec/spec_helper.rb'
     - '*.gemspec'
     - 'Rakefile'
     - 'bin/*'
+
+# サンプルなので緩める
+Style/MixinUsage:
+  Enabled: false
+Style/GlobalVars:
+  Enabled: false
+Layout/Tab:
+  Enabled: false

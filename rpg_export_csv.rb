@@ -1,8 +1,6 @@
 require './lib/vxlib'
 
-cur = RGSS.current
-
-def val(obj, vxace: RGSS.current.ace?)
+def val(obj, vxace: RGSS.current.ace?) # rubocop:disable CyclomaticComplexity, PerceivedComplexity
   if obj & 3 != 0
     return obj >> 1 if obj & 1 == 1
     return true if obj == 2
@@ -26,14 +24,28 @@ def val(obj, vxace: RGSS.current.ace?)
   end
 end
 
-ary_bs   = cur.globals['$data_items']
-ary      = ptr(ptr(ary_bs) + 4) # => data
-ary_flgs = ptr(ary)
-ary_len  = (ary_flgs & (1 << 13)) > 0 ? 3 : ptr(ary + 8)
-ary_buf  = ProcessMemoryEx.latest.ptr_fmt(ptr(ary + 16), 4 * ary_len, 'V*')
-obj = RGSS3Object.new ary_buf[1]
-ary_buf.each{|addr|
-  obj = val addr # RGSS3Object.new addr
-  next unless obj
-  puts %w[@id @name @price].map{|name| val(obj[name]) }.join "\t"
+require 'csv'
+
+def data_export(name, filter, rgss: RGSS.current, output_file: STDOUT)
+  ary  = ptr(ptr(rgss.globals[name]) + 4) # => data
+  flgs = ptr(ary)
+  len  = (flgs & (1 << 13)) > 0 ? 3 : ptr(ary + 8)
+  ary_buf = ProcessMemoryEx.latest.ptr_fmt(ptr(ary + 16), 4 * len, 'V*')
+  obj = RGSS3Object.new ary_buf[1]
+  CSV(output_file){|csv|
+    ary_buf.each{|addr|
+      obj = val addr # RGSS3Object.new addr
+      next unless obj
+      csv << filter.map{|nm| val(obj[nm]) }
+    }
+  }
+end
+
+puts '$data_itemsを標準出力にCSVで出力'
+data_export '$data_items', %w[@id @name @price]
+
+puts '$data_weaponsをdata_weapons.csvに出力'
+open('data_weapons.csv', 'w:utf-8'){|f|
+  f.write "\ufeff" # BOM付与
+  data_export '$data_weapons', %w[@id @name], output_file: f
 }

@@ -88,12 +88,12 @@ class RGSS
   RGSS103J = RGSSSet.new 0x144514, 0x1452F0
   #RGSS103J = RGSSSet.new 0x144534, 0x145310 
   def RGSS103J.symbol_tbl
-    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x019C30
-    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x019C30
+    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x018E54
+    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x018E54 - MName('RGSS103J.dll')
   end
   def RGSS103J.gvar_tbl
-    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x018E54
-    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x018E54
+    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x019C30
+    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x019C30 - MName('RGSS103J.dll')
   end
   RGSS104J = RGSSSet.new 0x1836BC, 0x184498
   RGSS200J = RGSSSet.new 0x18A23C, 0x18B018

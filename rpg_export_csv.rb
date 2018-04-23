@@ -1,4 +1,4 @@
-require './lib/vxlib'
+require_relative 'lib/vxlib'
 
 def val(obj, vxace: RGSS.current.ace?) # rubocop:disable CyclomaticComplexity, PerceivedComplexity
   if obj & 3 != 0

@@ -84,12 +84,22 @@ class RGSS
   private def symbols
     RGSSInternalHash.new @mem.ptr(tables.symbol_tbl_addr), ace?, @mem
   end
-  # 詳細はそのうち調べる
   #                      symbol_table, global_vars
-  RGSS103J = RGSSSet.new 0x1836BC, nil
+  RGSS103J = RGSSSet.new 0x144514, 0x1452F0
+  #RGSS103J = RGSSSet.new 0x144534, 0x145310 
+  def RGSS103J.symbol_tbl
+    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x019C30
+    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x019C30
+  end
+  def RGSS103J.gvar_tbl
+    # [:(MName::RGSS103J.dll)+0x003BB6:]+0x018E54
+    ptr(MName('RGSS103J.dll') + 0x003BB6) + 0x018E54
+  end
   RGSS104J = RGSSSet.new 0x1836BC, 0x184498
-  RGSS202J = RGSSSet.new 0x18A23C, 0x18B018
-  RGSS301  = RGSSSet.new 0x25a2ac, 0x2ac044, true
+  RGSS200J = RGSSSet.new 0x18A23C, 0x18B018
+  RGSS202J = RGSS200J
+  RGSS300  = RGSSSet.new 0x25a2ac, 0x2ac044, true
+  RGSS301  = RGSS300
 end
 # Ruby Stringを取り込む
 # VXAce対応
